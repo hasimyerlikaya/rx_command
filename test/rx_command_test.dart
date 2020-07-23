@@ -5,9 +5,10 @@ import 'package:test/test.dart';
 import 'package:rx_command/rx_command.dart';
 import 'package:rxdart/rxdart.dart';
 
-StreamMatcher crm<T>(Object data, bool hasError, bool isExceuting) {
+StreamMatcher crm<TParam, TResult>(
+    Object data, bool hasError, bool isExceuting) {
   return StreamMatcher((x) async {
-    final event = await x.next as CommandResult<T>;
+    final event = await x.next as CommandResult<TParam, TResult>;
     if (event.data != data) return "Wong data $data != ${event.data}";
 
     if (!hasError && event.error != null) return "Had error while not expected";
